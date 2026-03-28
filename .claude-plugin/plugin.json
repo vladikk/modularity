@@ -1,0 +1,8 @@
+{
+  "name": "modularity",
+  "description": "Design and analyze modular software systems using the Balanced Coupling model by Vlad Khononov. Includes a modularity review skill for analyzing existing codebases and a high-level design skill for designing new systems from requirements.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Vlad Khononov"
+  }
+}

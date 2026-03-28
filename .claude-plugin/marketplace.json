@@ -1,0 +1,13 @@
+{
+  "name": "vladikk-modularity",
+  "owner": {
+    "name": "Vlad Khononov"
+  },
+  "plugins": [
+    {
+      "name": "modularity",
+      "source": "./",
+      "description": "Design and analyze modular software systems using the Balanced Coupling model"
+    }
+  ]
+}
