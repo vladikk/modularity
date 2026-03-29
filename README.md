@@ -1,6 +1,15 @@
 # Modularity Skills
 
-A [Claude Code](https://code.claude.com) plugin for designing and analyzing modular software systems using the [Balanced Coupling](https://coupling.dev) model.
+**TL;DR:** A [Claude Code](https://code.claude.com) plugin for designing and analyzing modular software systems using the [Balanced Coupling](https://coupling.dev) model.
+
+There's no shortage of AI tools that provide code-level feedback: best practices, edge cases, potential bugs. That's useful, but it's not where the costly mistakes hide. In the AI era, code is generated faster than ever, and so technical debt accumulates faster too. Any architectural inefficiency, any misdrawn boundary, any unmanaged coupling will grow into a big ball of mud at a pace that wasn't possible before.
+
+This plugin operates at the architectural level. It includes two skills:
+
+- **`/modularity:review`** analyzes an existing codebase for coupling imbalances: what knowledge is properly encapsulated, what's leaking across component boundaries, and where cascading changes are waiting to happen.
+- **`/modularity:high-level-design`** goes the other direction, designing modular architectures from functional requirements and producing module design docs with integration contracts, test specifications, and a full coupling assessment.
+
+Both skills are grounded in the [Balanced Coupling](https://coupling.dev) model, so every recommendation traces back to a concrete dimension (integration strength, distance, volatility), not gut feel.
 
 ## Installation
 
