@@ -7,6 +7,7 @@ description: >
 argument-hint: "[path/to/functional-requirements.md]"
 skills:
   - balanced-coupling
+allowed-tools: Read, Write, Edit, AskUserQuestion, TaskCreate, TaskUpdate
 ---
 
 # High-Level Design
@@ -16,8 +17,10 @@ You design modular high-level architectures from functional requirements and pro
 ## Input
 
 If `$ARGUMENTS` contains a file path, read that file as the functional requirements input.
-If `$ARGUMENTS` is empty or not a valid file path, ask the user: "Please provide the path to the functional requirements file."
-Do not proceed until you have the functional requirements.
+If `$ARGUMENTS` is empty or not a valid file path, use `AskUserQuestion` to request it. Header: "Requirements". Question: "Please provide the path to the functional requirements file."
+Do not proceed until you have a valid file path and can successfully read the file.
+
+Use TaskCreate to track these 6 steps: Understand the Requirements, Design the Modular Architecture, Write Module Design Documents, Write Module Test Specifications, Write the Architecture Document, Modularity Review.
 
 ## Interaction Rules
 
@@ -41,23 +44,23 @@ Read the functional requirements file. Then:
 3. **Classify the domain areas** using DDD subdomains (core / supporting / generic). This determines volatility and where to invest design effort. Analyze the requirements and propose classifications yourself. Present them as a table:
 
 | Subdomain | Classification | Rationale |
-|-----------|---------------|-----------|
-| {area 1} | Core | {why} |
-| {area 2} | Supporting | {why} |
-| {area 3} | Generic | {why} |
+| --------- | -------------- | --------- |
+| {area 1}  | Core           | {why}     |
+| {area 2}  | Supporting     | {why}     |
+| {area 3}  | Generic        | {why}     |
 
 Then ask the user to validate using `AskUserQuestion`:
 
-| Header | Question | Options |
-|--------|----------|---------|
+| Header     | Question                                       | Options                                                                                                                                    |
+| ---------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
 | Subdomains | Do these subdomain classifications look right? | 1. **Approved** - All correct 2. **Some are wrong** - I'll tell you which to change 3. **Missing subdomains** - There are areas not listed |
 
 If the user says some are wrong, ask which ones and what the correct classification should be.
 
 Present your full understanding to the user for validation using `AskUserQuestion`:
 
-| Header | Question | Options |
-|--------|----------|---------|
+| Header   | Question                                                  | Options                                                                                                                                                   |
+| -------- | --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Approval | Does this understanding of the requirements look correct? | 1. **Approved** - Proceed to architecture design 2. **Needs changes** - I'll explain what's wrong 3. **Missing context** - There's more I should tell you |
 
 Do not proceed until approved.
@@ -79,14 +82,14 @@ Using the Balanced Coupling model:
 
 Present the coupling assessment table to the user:
 
-| Integration | Strength | Distance | Volatility | Balanced? | Action |
-|---|---|---|---|---|---|
-| A -> B | Model | High (separate services) | High (core) | No — tight coupling | Reduce strength: introduce contract via API |
+| Integration | Strength | Distance                 | Volatility  | Balanced?           | Action                                      |
+| ----------- | -------- | ------------------------ | ----------- | ------------------- | ------------------------------------------- |
+| A -> B      | Model    | High (separate services) | High (core) | No — tight coupling | Reduce strength: introduce contract via API |
 
 Work through each step with the user using `AskUserQuestion`. Each step requires user approval. Do not proceed to writing design documents until the modular architecture is fully validated by the user.
 
-| Header | Question | Options |
-|--------|----------|---------|
+| Header   | Question                                     | Options                                                                                                                                                  |
+| -------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Approval | Does this modular architecture look correct? | 1. **Approved** - Proceed to design documents 2. **Needs changes** - I'll explain what to adjust 3. **Rethink** - Let's reconsider the module boundaries |
 
 ### Step 3: Write Module Design Documents
@@ -97,22 +100,28 @@ Using the validated architecture from Step 2, for each module create `docs/desig
 # {Module Name}
 
 ## Functional Responsibilities
+
 What this module does — the functionality it implements and the business capabilities it provides.
 
 ## Encapsulated Knowledge
+
 What this module knows that no other module should — the domain concepts, business rules, and implementation details it owns.
 
 ## Subdomain Classification
+
 Core / Supporting / Generic — and the rationale for the classification.
 
 ## Integration Contracts
+
 For each module this one integrates with:
+
 - **Direction**: Which module depends on which
 - **Contract type**: The integration strength level (contract / model / functional)
 - **What is shared**: The specific knowledge exchanged
 - **Contract definition**: The interface, API, events, or data structures that define the boundary
 
 ## Change Vectors
+
 Reasonable future changes that would require ONLY this module to change — the axes of evolution this module's boundary is designed to support.
 ```
 
@@ -120,8 +129,8 @@ Write all module design documents without asking for individual approval. The mo
 
 After writing all module documents, present the complete set to the user for review using `AskUserQuestion`:
 
-| Header | Question | Options |
-|--------|----------|---------|
+| Header  | Question                                                         | Options                                                                                                                                                                            |
+| ------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Modules | All module design documents have been written. How do they look? | 1. **Approved** - Proceed to test specifications 2. **Needs changes** - I'll explain which modules need work 3. **Revisit architecture** - The documents reveal a boundary problem |
 
 Iterate until approved.
@@ -134,19 +143,24 @@ For each module, create `docs/design/{module-name}/tests.md` containing:
 # {Module Name} — Test Specification
 
 ## Unit Tests
+
 Tests for the module's internal logic in isolation. Covers business rules, calculations, state transitions, and edge cases.
 
 ## Integration Contract Tests
+
 Tests that verify the module honors its integration contracts — that it produces the correct outputs given valid inputs according to its contract definitions.
 
 ## Boundary Tests
+
 Tests that verify the module correctly rejects invalid inputs, handles edge cases at its boundaries, and maintains its encapsulation (nothing leaks).
 
 ## Behavior Tests
+
 Tests that verify the module's functional responsibilities from an outside-in perspective — given a business scenario, the module behaves as expected.
 ```
 
 Each test section should contain specific, named test cases with:
+
 - **Test name**: A descriptive name
 - **Scenario**: What is being tested
 - **Expected behavior**: What the correct outcome is
@@ -161,24 +175,31 @@ Create `docs/design/architecture.md` containing:
 # Architecture Overview
 
 ## Functional Requirements Summary
+
 Brief summary of the requirements this architecture addresses.
 
 ## Module Map
+
 List of all modules with one-line descriptions.
 
 ## How the Modules Work Together
+
 For each key functional flow / use case:
+
 - Which modules participate
 - How data/control flows between them
 - What contracts govern the interactions
 
 ## Coupling Assessment
+
 The coupling assessment table from the modular architecture analysis, with commentary on the key design decisions and their rationale grounded in the Balanced Coupling model.
 
 ## Design Decisions and Trade-offs
+
 Key architectural decisions, what was considered, what was chosen, and why — grounded in the coupling dimensions and balance rule.
 
 ## Unresolved Risks
+
 Anything the design intentionally leaves open, along with the conditions under which it should be revisited.
 ```
 
@@ -194,11 +215,13 @@ After all documents are written, review your own design for modularity imbalance
 4. **Flag imbalances**: Focus on integrations that are both unbalanced and volatile.
 
 For each issue found, classify its severity:
+
 - **Critical**: High strength + high distance + high volatility.
 - **Significant**: Unbalanced coupling in a moderately volatile area, or implicit coupling that hides integration points.
 - **Minor**: Unbalanced coupling in a low-volatility area, or low cohesion that increases cognitive load but doesn't cause cascading changes.
 
 If there are any Critical or Significant issues:
+
 1. Present the issues to the user with the same structure used in step 2's coupling assessment table, plus a description of the knowledge leakage and recommended improvement for each.
 2. Propose concrete changes to the design to rebalance the coupling.
 3. Once the user approves the changes, update the affected design documents (module designs, test specs, and architecture document).
