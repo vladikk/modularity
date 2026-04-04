@@ -40,7 +40,14 @@ Follow these steps strictly. Each step requires explicit user approval before mo
 Read the functional requirements file. Then:
 
 1. **Restate the functional requirements** in your own words. Organize them into cohesive functional areas.
-2. **Identify what's unclear.** List every ambiguity, missing piece, or assumption you'd need to make. Ask the user about each one individually using `AskUserQuestion` with concrete options where possible.
+2. **Discover what's missing for coupling-aware design.** Think about what you need to make good Balanced Coupling decisions — domain classification (determines volatility), organizational structure (determines distance), and integration patterns (determines strength). Identify gaps in the requirements, especially:
+   - Business areas where core vs supporting vs generic classification is ambiguous — propose your interpretation and ask the user to confirm or correct
+   - Organizational constraints that affect module boundaries (team ownership, deployment units, shared infrastructure)
+   - Strategic direction that affects where volatility will be highest and where to invest design effort
+   - Integration requirements where the appropriate coupling strength is unclear
+
+   Ask the user about each gap individually using `AskUserQuestion`. Skip what's clear from the requirements. Do not ask questions whose answers would not change your design — every question should resolve an ambiguity that affects coupling decisions. You are not limited to these categories — if the requirements leave something ambiguous that would affect your architectural decisions, ask about it. Ground questions in specific requirements you read.
+
 3. **Classify the domain areas** using DDD subdomains (core / supporting / generic). This determines volatility and where to invest design effort. Analyze the requirements and propose classifications yourself. Present them as a table:
 
 | Subdomain | Classification | Rationale |
