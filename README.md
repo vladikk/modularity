@@ -58,7 +58,7 @@ Analyzes an existing codebase for coupling imbalances. Use when:
 
 The review output includes hyperlinks to [coupling.dev](https://coupling.dev) for each coupling concept referenced.
 
-### `/modularity:design` — High-Level Design
+### `/modularity:design` — Modular Design
 
 Designs modular architectures from functional requirements. Use when:
 
