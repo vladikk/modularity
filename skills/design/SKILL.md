@@ -1,10 +1,13 @@
 ---
 name: design
 description: >
-  Designs modular high-level architectures from functional requirements and produces design
-  documents for each module. Use when designing a new system, creating architecture documentation,
-  or producing module-level design specs with integration contracts and test specifications.
+  Designs modular high-level architectures from a functional requirements document and produces
+  design documents for each module. Use when designing a new system from requirements, creating
+  architecture documentation, or producing module-level design specs with integration contracts
+  and test specifications. Requires a functional requirements document as input — use the
+  review skill to analyze existing codebases instead.
 argument-hint: "[path/to/functional-requirements.md]"
+context: fork
 skills:
   - balanced-coupling
 allowed-tools: Read, Write, Edit, AskUserQuestion, TaskCreate, TaskUpdate
@@ -56,19 +59,9 @@ Read the functional requirements file. Then:
 | {area 2}  | Supporting     | {why}     |
 | {area 3}  | Generic        | {why}     |
 
-Then ask the user to validate using `AskUserQuestion`:
+Then validate using `AskUserQuestion` — Header: "Subdomains", Options: "Approved — All correct", "Some are wrong — I'll tell you which to change", "Missing subdomains — There are areas not listed". If the user says some are wrong, ask which ones and what the correct classification should be.
 
-| Header     | Question                                       | Options                                                                                                                                    |
-| ---------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| Subdomains | Do these subdomain classifications look right? | 1. **Approved** - All correct 2. **Some are wrong** - I'll tell you which to change 3. **Missing subdomains** - There are areas not listed |
-
-If the user says some are wrong, ask which ones and what the correct classification should be.
-
-Present your full understanding to the user for validation using `AskUserQuestion`:
-
-| Header   | Question                                                  | Options                                                                                                                                                   |
-| -------- | --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Approval | Does this understanding of the requirements look correct? | 1. **Approved** - Proceed to architecture design 2. **Needs changes** - I'll explain what's wrong 3. **Missing context** - There's more I should tell you |
+Present your full understanding to the user for validation using `AskUserQuestion` — Header: "Approval", Options: "Approved — Proceed to architecture design", "Needs changes — I'll explain what's wrong", "Missing context — There's more I should tell you".
 
 Do not proceed until approved.
 
@@ -95,9 +88,7 @@ Present the coupling assessment table to the user:
 
 Work through each step with the user using `AskUserQuestion`. Each step requires user approval. Do not proceed to writing design documents until the modular architecture is fully validated by the user.
 
-| Header   | Question                                     | Options                                                                                                                                                  |
-| -------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Approval | Does this modular architecture look correct? | 1. **Approved** - Proceed to design documents 2. **Needs changes** - I'll explain what to adjust 3. **Rethink** - Let's reconsider the module boundaries |
+Validate using `AskUserQuestion` — Header: "Approval", Options: "Approved — Proceed to design documents", "Needs changes — I'll explain what to adjust", "Rethink — Let's reconsider the module boundaries".
 
 ### Step 3: Write Module Design Documents
 
@@ -134,11 +125,7 @@ Reasonable future changes that would require ONLY this module to change — the 
 
 Write all module design documents without asking for individual approval. The modular architecture was already approved in Step 2 — the documents are a direct translation of that approved design.
 
-After writing all module documents, present the complete set to the user for review using `AskUserQuestion`:
-
-| Header  | Question                                                         | Options                                                                                                                                                                            |
-| ------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Modules | All module design documents have been written. How do they look? | 1. **Approved** - Proceed to test specifications 2. **Needs changes** - I'll explain which modules need work 3. **Revisit architecture** - The documents reveal a boundary problem |
+After writing all module documents, present the complete set using `AskUserQuestion` — Header: "Modules", Options: "Approved — Proceed to test specifications", "Needs changes — I'll explain which modules need work", "Revisit architecture — The documents reveal a boundary problem".
 
 Iterate until approved.
 
@@ -212,6 +199,8 @@ Anything the design intentionally leaves open, along with the conditions under w
 
 Write the architecture document without asking for approval. It synthesizes the already-approved module designs.
 
+After writing, verify all expected output files exist and are non-empty: the architecture document and all module design and test specification files.
+
 ### Step 6: Modularity Review
 
 After all documents are written, review your own design for modularity imbalances. For each integration between modules:
@@ -245,3 +234,4 @@ Minor issues should be noted in the architecture document's "Unresolved Risks" s
 - **Distinguish essential from accidental volatility.** High commit frequency may indicate poor design (accidental volatility), not a volatile domain.
 - **Consider the organizational dimension of distance.** Same code structure + different teams = higher effective distance.
 - **Ground every recommendation in the model.** Reference the specific dimension and principle that justifies each design decision.
+- **Explain DDD terms on first use.** Do not assume the user knows what "core subdomain" or "bounded context" means. Use the DDD terms but accompany each with a brief plain-language explanation: core subdomain = competitive advantage area that changes frequently; supporting = needed but not differentiating, rarely changes; generic = solved problem with off-the-shelf solutions, but provider may change.
