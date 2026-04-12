@@ -1,15 +1,16 @@
 ---
 name: document
 description: >
-  Produces modularity review documents in both Markdown and HTML formats.
-  Use when writing the final review output from a modularity analysis.
+  Produces modularity review documents. Always generates Markdown; generates HTML
+  only when explicitly requested. Use when writing the final review output from
+  a modularity analysis.
 user-invocable: false
 allowed-tools: Read, Write
 ---
 
 # Document
 
-You produce the final modularity review document in two formats: Markdown (`.md`) and HTML (`.html`). Both files contain identical content.
+You produce the final modularity review document. **Markdown is always generated.** HTML is generated only when the user explicitly requests it (e.g., via argument, instruction, or when asked for a shareable report). Both formats contain identical content when HTML is produced.
 
 ## Document Structure
 
@@ -128,12 +129,12 @@ _This analysis was performed using the [Balanced Coupling](https://coupling.dev)
 
 ## Output
 
-Write both files to `docs/modularity-review/!`date +%Y-%m-%d`/`:
+Write to `docs/modularity-review/!`date +%Y-%m-%d`/`:
 
-1. `docs/modularity-review/!`date +%Y-%m-%d`/modularity-review.md` — the Markdown version
-2. `docs/modularity-review/!`date +%Y-%m-%d`/modularity-review.html` — the HTML version
+1. `docs/modularity-review/!`date +%Y-%m-%d`/modularity-review.md` — **always generated**
+2. `docs/modularity-review/!`date +%Y-%m-%d`/modularity-review.html` — **only when HTML is requested**
 
-### HTML generation
+### HTML generation (when requested)
 
 **You MUST read the template file before generating HTML.** The template is at `${CLAUDE_SKILL_DIR}/assets/template.html`. Read this file, then replace:
 

@@ -1,10 +1,12 @@
 ---
 name: review
 description: >
-  Analyzes a codebase's modularity imbalances using the Balanced Coupling model and produces
-  a review of design issues. Use when reviewing existing code for coupling problems, assessing
-  architecture quality, identifying distributed monolith risks, or finding areas where changes
-  are unexpectedly expensive.
+  Analyzes an existing codebase for modularity imbalances using the Balanced Coupling model
+  and produces a review of design issues. Use when reviewing existing code for coupling
+  problems, assessing architecture quality, identifying distributed monolith risks, or
+  finding areas where changes are unexpectedly expensive. Requires an existing codebase
+  as input — use the design skill to create architectures from requirements instead.
+context: fork
 skills:
   - balanced-coupling
   - document
@@ -75,7 +77,7 @@ Flag every integration where coupling is **unbalanced AND volatile**:
 
 ### Step 4: Write the Review
 
-Using the document skill (preloaded), produce the modularity review in both Markdown and HTML formats. The document skill defines the structure and output format.
+Using the document skill (preloaded), produce the modularity review. The document skill defines the structure and output format. Markdown is always generated; HTML is produced only if the user requests it.
 
 ## Important Constraints
 
@@ -86,3 +88,4 @@ Using the document skill (preloaded), produce the modularity review in both Mark
 - **Ground every issue in the model.** Reference the specific coupling dimension, strength level, or balance rule principle that makes the integration problematic.
 - **Never recommend "just decouple everything."** Decomposition increases distance. Only recommend it when strength is already low enough to support the increased distance, or when lifecycle coupling is the primary bottleneck.
 - **Consider the organizational dimension.** Same code structure + different teams = higher effective distance. Ask about team ownership when it affects the analysis.
+- **Explain DDD terms on first use.** Do not assume the user knows what "core subdomain" or "bounded context" means. Use the DDD terms but accompany each with a brief plain-language explanation: core subdomain = competitive advantage area that changes frequently; supporting = needed but not differentiating, rarely changes; generic = solved problem with off-the-shelf solutions, but provider may change.
