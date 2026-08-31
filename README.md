@@ -45,10 +45,13 @@ Analyzes an existing codebase for coupling imbalances. Use when:
 **How it works:**
 
 1. Reads your code and functional requirements
-2. Asks you about domain classification (core/supporting/generic), team structure, and known pain points
-3. Maps integrations between components across three dimensions: integration strength, distance, and volatility
-4. Applies the balance rule to flag imbalances
-5. Produces a review document (Markdown + HTML) with a coupling overview table, issue descriptions, and concrete improvement recommendations
+2. Asks you about domain classification (core/supporting/generic), team structure, known pain points, and which areas you expect to change soon (the volatility ruling)
+3. Runs a catalog of discovery sweeps — in parallel, via subagents on larger codebases — hunting coupling by method, not just at declared seams: the seam map, declared sync markers, undeclared duplication, published decisions re-derived elsewhere, spec/doc prose vs code, temporal constants, a guard audit ("can this pin actually go red?"), the ops/config shell, native and vendor carriers, speculative surface, file-level fractal descent, and git co-change evidence
+4. Re-verifies every candidate against the code before it can appear in the report — nothing lands on a subagent's word
+5. Applies the balance rule to flag imbalances (strength, distance, volatility)
+6. Produces a review document (Markdown + HTML) with a coupling overview table, ranked issue descriptions, a "what came back clean" section, a coverage ledger stating what was and wasn't swept, and a full-findings appendix
+
+Two depths: **Standard** (the four highest-yield sweeps) and **Exhaustive** (all twelve plus an adversarial second wave over the merged results — recommended before planning a remediation).
 
 **Usage:**
 

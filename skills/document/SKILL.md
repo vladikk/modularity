@@ -73,6 +73,18 @@ A concrete, actionable proposal to rebalance the coupling. Ground the recommenda
 Include the trade-offs of the proposed change — what cost does it introduce, and why is the trade-off worthwhile?
 ```
 
+### What Came Back Clean
+
+After the issue sections, a short section naming the strongest **verified negatives**: seams, guards, and areas that were examined and cleared, each with the evidence that cleared it (the pin that reads both operands, the decision published and consumed as designed). Verified negatives are results — they tell the reader what does NOT need attention and teach the patterns the issues should copy.
+
+### Coverage
+
+A section stating what the review examined, so completeness is a measurable claim rather than a hope. Report per discovery sweep (see the review skill's sweep catalog): ran or skipped, its denominators (e.g. sync markers classified, literals scanned, exports checked, spec promises verified, co-change pairs explained, files ≥150 LOC read vs unread), and candidates → verified findings. Close with what was deliberately out of scope. If the review ran at Standard depth, say which sweeps did not run.
+
+### Appendix — Full Findings Table
+
+Every finding that survived verification but did not warrant a full issue section: one row each with integration, strength, distance, volatility, balanced-verdict, and a one-line disposition. The issue sections are the ranked highlights; the appendix is the complete field. Do not silently drop verified findings.
+
 ### Footer
 
 At the bottom of every review document, include this exact text verbatim — do not paraphrase, expand, or add commentary:
