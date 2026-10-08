@@ -195,7 +195,7 @@ Without this framing, the same coupling relationship can appear balanced or unba
 
 ## 4. Balancing the Dimensions
 
-### 4.1The Four Extreme Combinations (Strength x Distance)
+### 4.1 The Four Extreme Combinations (Strength x Distance)
 
 The interplay of integration strength and distance can be understood through their extreme combinations:
 
@@ -204,7 +204,7 @@ The interplay of integration strength and distance can be understood through the
 | **Low Strength** | **Low Cohesion** (Complexity) — Unrelated components located close together. Increases cognitive load. Drifts toward big ball of mud. | **Loose Coupling** (Modularity) — Low strength minimizes cascading changes. High distance is balanced. |
 | **High Strength** | **High Cohesion** (Modularity) — Components must co-evolve, but low distance makes cascading changes cheap. | **Tight Coupling** (Complexity) — Frequent cascading changes (high strength) that are expensive to implement (high distance). A step toward a distributed monolith. |
 
-### 4.2The Balance Rule
+### 4.2 The Balance Rule
 
 The key insight: **modularity emerges when integration strength and distance balance each other** (one is high, the other is low). **Complexity emerges when they are equal** (both high or both low).
 
@@ -217,7 +217,7 @@ COMPLEXITY = STRENGTH AND DISTANCE
 
 This explains why "loose coupling" and "high cohesion" are both desirable — they are **both forms of balanced coupling**, just with different dimension values.
 
-### 4.3Pragmatic Balance (Adding Volatility)
+### 4.3 Pragmatic Balance (Adding Volatility)
 
 Eric Evans observed that "not all of a large system will be well designed." The dimension of **volatility** introduces pragmatism.
 
