@@ -245,3 +245,4 @@ Minor issues should be noted in the architecture document's "Unresolved Risks" s
 - **Distinguish essential from accidental volatility.** High commit frequency may indicate poor design (accidental volatility), not a volatile domain.
 - **Consider the organizational dimension of distance.** Same code structure + different teams = higher effective distance.
 - **Ground every recommendation in the model.** Reference the specific dimension and principle that justifies each design decision.
+- **Never label modules with letters or numbers.** No "A", "B", "M1", "#3", no "A → B" in coupling tables — a human cannot keep the mapping in their head. Always use the module's name (e.g. "Order Placement → Inventory Reservation") in tables, questions, diagrams, documents and chat. The same applies to risks and findings: name them, don't code them.
